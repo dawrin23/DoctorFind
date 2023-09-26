@@ -2,7 +2,10 @@ import React from 'react'
 
 function page() {
   return (
-    <div>First page</div>
+    <div>
+      <h1>First page</h1>
+
+    </div>
   )
 }
 
