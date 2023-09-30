@@ -52,6 +52,6 @@ const config: Config = {
       'Noto Color Emoji'
     ]
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
 export default config

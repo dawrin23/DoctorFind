@@ -1,9 +1,11 @@
 'use client'
 import { useState } from "react";
+import axios from "axios";
 
 function RegisterPage() {
 
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
+  const [name, setname] = useState("");
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const reader = new FileReader();
