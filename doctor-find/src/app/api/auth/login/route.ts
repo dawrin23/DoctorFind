@@ -50,6 +50,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+
     const { password: userPass, ...rest } = userFind;
 
     const token = jwt.sign({ data: rest }, "secreto", { expiresIn: 86400 });
