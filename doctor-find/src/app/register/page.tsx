@@ -112,7 +112,7 @@ function RegisterPage() {
       hover:file:bg-blue-100" type="file" onChange={handleImageChange} />
                 </div>
                 <div>
-<img src={imagePreviewUrl} alt="Preview" className="h-16 w-16 object-cover rounded-full" />
+<img src={imagePreviewUrl} alt="Preview" className="h-auto w-42 object-cover rounded-full" />
                 </div>
                 </div>
                 <button
