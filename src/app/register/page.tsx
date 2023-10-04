@@ -5,6 +5,7 @@ import {Toaster, toast} from "sonner"
 import {signIn} from "next-auth/react"
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 function RegisterPage() {
 
@@ -193,12 +194,12 @@ function RegisterPage() {
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   Ya tienes una cuenta?
-                  <a
-                    href="#"
+                  <Link
+                    href="/login"
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >
                     Login aqui
-                  </a>
+                  </Link>
                 </p>
                 <Toaster richColors  />
               </form>

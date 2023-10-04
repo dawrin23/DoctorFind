@@ -3,6 +3,7 @@ import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
+import Link from "next/link";
 
 function LoginPage() {
   const [error, setError] = useState("");
@@ -24,7 +25,7 @@ function LoginPage() {
     }
 
     if (res?.ok) {
-      return router.push("/dashboard");
+      return router.push("/dashboard/profile");
     }
   };
 
@@ -84,13 +85,13 @@ function LoginPage() {
                   Iniciar seccion
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  No tienes una cuenta?{" "}
-                  <a
-                    href="#"
+                  No tienes una cuenta?
+                  <Link
+                    href="/register"
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >
                     Registrate aqui
-                  </a>
+                  </Link>
                 </p>
                 <Toaster richColors />
               </form>
