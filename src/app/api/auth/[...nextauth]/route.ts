@@ -15,6 +15,7 @@ const handler = NextAuth({
           placeholder: "********",
         },
       },
+      //@ts-ignore
       async authorize(credentials, req) {
         const userFound = await prisma.user.findUnique({
           where: {
