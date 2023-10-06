@@ -31,8 +31,20 @@ async function Navbar() {
                         <Link href='/login'>Login</Link>
                     </li>
                     <li className='px-3 py-1'>
+                        
                         <Link href='/register'>Registrar</Link>
                     </li>
+                    <li>
+        <details>
+          <summary>
+            Parent
+          </summary>
+          <ul className="px-3 py-1">
+            <li><a>Doctor</a></li>
+            <li><a>Paciente</a></li>
+          </ul>
+        </details>
+      </li>
                     <li className='px-3 py-1'>
                         <Link href='/about'>Sobre nosotros</Link>
                     </li>
