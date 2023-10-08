@@ -1,5 +1,6 @@
 "use client";
 import { useSession, signOut } from "next-auth/react";
+import {Button} from "@mui/material";
 
 function ProfilePage() {
   const { data: session, status } = useSession();
@@ -19,13 +20,15 @@ function ProfilePage() {
           2
         )}
       </pre>
-      <button
+      <Button
+        variant="outlined"
+        color="error"
         onClick={() => {
           signOut();
         }}
       >
         Cerrar sesion
-      </button>
+      </Button>
     </div>
   );
 }
