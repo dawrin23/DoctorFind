@@ -4,37 +4,25 @@ import Image from "next/image";
 
 function ProfilePage() {
   const { data: session, status } = useSession();
-
-  console.log(session, status);
   const userData = session?.user;
 
   return (
-    <div>
-      <h1>Profile</h1>
-      {/* <pre>
-        {JSON.stringify(
-          {
-            session,
-            status,
-          },
-          null,
-          2
-        )}
-      </pre> */}
-      <div className="container flex-col justify-items-center ">
-        <h2>Nombre: {userData?.name} {userData?.lastname}</h2>
-        <h2>Email: {userData?.email}</h2>
-        <div className="avatar">
-  <div className="w-24 rounded-full">
+
+<div className="flex flex-col items-center pb-10 pt-5">
     {
       //@ts-ignore
-      userData?.foto ? (  <img src={userData?.foto} />) : (<Image src="/avatar.png" width={100} height={100} alt="nothin" />)
+        userData?.foto && (
+            <img
+            className="w-24 h-24 mb-3 rounded-full shadow-lg"
+                src={userData?.foto}
+            />
+        )
     }
-   
-  </div>
-</div>
-      </div>
-      <button
+    <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">{userData?.name} {userData?.lastname}</h5>
+    <p>{userData?.email}</p>
+    <div className="flex mt-4 space-x-3 md:mt-6">
+        
+    <button
       className="btn btn-error hover:bg-red-500"
         onClick={() => {
           signOut();
@@ -43,6 +31,10 @@ function ProfilePage() {
         Cerrar sesion
       </button>
     </div>
+</div>
+
+     
+  
   );
 }
 

@@ -116,6 +116,7 @@ await unlink(filePath)
         name: name as string,
         lastname: lastname as string,
         password: hashedPassword,
+        //@ts-ignore
         foto: res ? res.secure_url : null,
 
       },
