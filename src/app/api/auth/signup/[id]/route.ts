@@ -8,5 +8,20 @@ export async function GET(request: Request, { params }: { params: { id: string }
             id: parseInt(params.id)
         }
     });
+
+    console.log(params.id)
+
     return NextResponse.json(user);
 }
+
+export async function POST(request: Request, { params }: { params: { id: string } }) {
+
+      const data = await request.json();
+      console.log(data.idUser);
+      console.log(params.id);
+
+      
+  
+      return NextResponse.json(data);
+  
+  }

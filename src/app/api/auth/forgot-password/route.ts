@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     //validar que el email sea correcto
     if (!email || !String(email).includes("@")) {
 
-        return NextResponse.json({ message: "Email is required" }, { status: 400 });
+        return NextResponse.json({ message: "Email is incorrect" }, { status: 400 });
     }
 
     //validar si el email existe en la base de datos

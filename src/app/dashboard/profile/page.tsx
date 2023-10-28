@@ -20,6 +20,7 @@ function ProfilePage() {
     }
     <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">{userData?.name} {userData?.lastname}</h5>
     <p>{userData?.email}</p>
+    <h1>{userData?.id}</h1>
     <div className="flex mt-4 space-x-3 md:mt-6">
         
     <button
