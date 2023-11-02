@@ -17,6 +17,15 @@ model User {
   lastname  String
   password  String
   foto      String?
+  Otp       Otp?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Otp {
+  id        Int      @id @default(autoincrement())
+  otp       Int   @unique
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int @unique
+
 }
