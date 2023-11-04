@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,22 +7,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model otp {
+  id       Int  @id @default(autoincrement())
+  otp      Int  @unique(map: "Otp_otp_key")
+  authorId Int  @unique(map: "Otp_authorId_key")
+  user     user @relation(fields: [authorId], references: [id], map: "Otp_authorId_fkey")
+}
+
+model otpdoctor {
+  id         Int        @id @default(autoincrement())
+  otp        Int        @unique(map: "Otpdoctor_otp_key")
+  authorId   Int        @unique(map: "Otpdoctor_authorId_key")
+  userdoctor userdoctor @relation(fields: [authorId], references: [id], map: "Otpdoctor_authorId_fkey")
+}
+
+model user {
   id        Int      @id @default(autoincrement())
-  email     String   @unique
+  email     String   @unique(map: "User_email_key")
   name      String
   lastname  String
   password  String
-  foto      String?
-  Otp       Otp?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime
+  foto      String?
+  otp       otp?
 }
 
-model Otp {
-  id        Int      @id @default(autoincrement())
-  otp       Int   @unique
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int @unique
-
+model userdoctor {
+  id               Int        @id @default(autoincrement())
+  email            String     @unique(map: "UserDoctor_email_key")
+  name             String
+  lastname         String
+  password         String
+  foto             String?
+  MedicalSpecialty String
+  ContactPhone     String
+  WorkExperience   String
+  OfficeAddress    String
+  WorkingHours     String
+  Exequatur        String
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime
+  otpdoctor        otpdoctor?
 }
