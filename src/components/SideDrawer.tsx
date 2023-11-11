@@ -3,10 +3,12 @@ import Image from "next/image";
 const BASE_URL_PHOTO =
   "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=400";
 function SideDrawer({ place, close }: any) {
-
-    const onDirectionClick = () => { 
-        window.open("https://www.google.com/maps/dir/?api=1&destination="+place.formatted_address)
-    }
+  const onDirectionClick = () => {
+    window.open(
+      "https://www.google.com/maps/dir/?api=1&destination=" +
+        place.formatted_address
+    );
+  };
 
   return (
     <div className="h-screen w-screen md:w-[400px] bg-white shadow-md p-5 z-20 dark:bg-gray-900 dark:border-gray-200">
@@ -30,19 +32,30 @@ function SideDrawer({ place, close }: any) {
         <h2 className="line-clamp-2 text-[23px] font-semibold mb-3">
           {place.name}
         </h2>
-        <Image
-          src={
-            BASE_URL_PHOTO +
-            "&photo_reference=" +
-            place?.photos[0]?.photo_reference +
-            "&key=" +
-            process.env.NEXT_PUBLIC_GOOGLE_PLACE_KEY
-          }
-          alt="placeholder"
-          width={200}
-          height={80}
-          className="w-full h-[170px] object-cover rounded-t-xl"
-        />
+        {place?.photos ? (
+          <Image
+            src={
+              BASE_URL_PHOTO +
+              "&photo_reference=" +
+              place?.photos[0]?.photo_reference +
+              "&key=" +
+              process.env.NEXT_PUBLIC_GOOGLE_PLACE_KEY
+            }
+            alt="placeholder"
+            width={200}
+            height={80}
+            className="w-full h-[170px] object-cover rounded-t-xl"
+          />
+        ) : (
+          <Image
+            src="/placeholder.jpg"
+            alt="placeholder"
+            width={200}
+            height={80}
+            className="w-full h-[150px] object-cover rounded-t-xl"
+          />
+        )}
+
         <div className="flex gap-2 mt-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +107,8 @@ function SideDrawer({ place, close }: any) {
           </h2>
         </div>
         <div className="mt-5 flex gap-5">
-          <button onClick={()=> onDirectionClick()}
+          <button
+            onClick={() => onDirectionClick()}
             className="flex gap-2 p-1 px-3
                  bg-blue-500 rounded-full text-white
                  hover:scale-105 transition-all"

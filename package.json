@@ -18,6 +18,7 @@
     "prisma": "^5.4.1",
     "react": "latest",
     "react-dom": "latest",
+    "react-modal": "^3.16.1",
     "resend": "^1.1.0",
     "sonner": "^1.0.3"
   },
@@ -26,6 +27,7 @@
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "@types/react-modal": "^3.16.2",
     "autoprefixer": "latest",
     "daisyui": "^3.9.2",
     "eslint": "latest",

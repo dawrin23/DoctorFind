@@ -1,41 +1,44 @@
 "use client";
-import { FormEvent, useState } from "react";
+import { FormEvent, Suspense, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
 import Link from "next/link";
+import Loading from "./loading";
 
 function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
+    try {
+      const formData = new FormData(e.currentTarget);
 
-    const res = await signIn("credentials", {
-      email: formData.get("email"),
-      password: formData.get("password"),
-      redirect: false,
-    });
-
-    if (res?.error) {
-    return setError(res.error as string);
+      const res = await signIn("credentials", {
+        email: formData.get("email"),
+        password: formData.get("password"),
+        redirect: false,
+      });
+      if (res?.ok) {
+        return router.push("/dashboard/profile");
+      }
+    } catch (error) {
+      toast.error("Error al iniciar sesion");
+    } finally {
+      setLoading(false);
     }
-
-    if (res?.ok) {
-      return router.push("/dashboard/profile");
-    }
+  
+    
   };
 
-  const toastSet = () => {
-    toast.error(error);
-  };
+  
 
   return (
     <div>
-      {error ? <>{toastSet()}</> : null}
       <section className="bg-gray-50 dark:bg-gray-900 container">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a
@@ -77,12 +80,12 @@ function LoginPage() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                 </div>
-
                 <button
                   type="submit"
                   className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  disabled={loading}
                 >
-                  Iniciar seccion
+                  {loading ? <Loading /> : 'Iniciar sesion'}
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                   No tienes una cuenta?
