@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 import { Prisma } from "@prisma/client";
+import { getServerSession } from "next-auth";
 
 interface Params {
   params: { id: string };
 }
 
-export async function GET(request: Request, { params }: Params) {
-  //buscar el otp y el usuario
-  
-}
+//@ts-ignore
+const userId = getServerSession().id;
 
 export async function DELETE(request: Request, { params }: Params) {
   try {
