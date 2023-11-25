@@ -7,8 +7,13 @@ interface Params {
   params: { id: string };
 }
 
+export async function GET(request: Request, { params }: Params) { 
+  
 //@ts-ignore
-const userId = getServerSession().id;
+const userId = getServerSession();
+
+return NextResponse.json(userId);
+}
 
 export async function DELETE(request: Request, { params }: Params) {
   try {

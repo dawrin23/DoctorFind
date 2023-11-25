@@ -25,17 +25,21 @@ function ResetPassword() {
     if (Array.isArray(otp) && otp.length > 0) {
       const otpValue = otp.join("");
       console.log(otpValue);
-      const data = await axios.post("http://localhost:3000/api/auth/find-otp", {
+
+      const res = await axios.post("http://localhost:3000/api/auth/find-otp", {
         otp: otpValue,
       });
 
-      console.log(data);
+      console.log(res);
 
-      if (data.status === 200) {
+      if (res.status === 200) {
         toast.success("Codigo correcto");
         //abrir modal para cambiar contraseña
         setModalIsOpen(true);
       }
+
+       toast(res.data.message)
+
     } else {
       toast.error("Ingrese un codigo");
     }
@@ -64,7 +68,7 @@ function ResetPassword() {
                       <input
                         className="w-full h-full dark:text-black flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                         type="text"
-                        placeholder="*"
+                        placeholder="•"
                         maxLength={1}
                         onChange={(event) => {
                           handleOtpChange(index, event);

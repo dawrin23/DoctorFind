@@ -1,6 +1,6 @@
 "use client";
-import { FormEvent, Suspense, useState } from "react";
-import { signIn } from "next-auth/react";
+import { FormEvent, Suspense, useEffect, useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
 import Link from "next/link";
@@ -10,6 +10,15 @@ function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
+  const { data: session, status } = useSession();
+const loading1 = status === 'loading';
+
+useEffect(() => {
+  if (!loading && session) {
+    router.push('/dashboard');
+  }
+}, [loading1, session]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,7 +33,7 @@ function LoginPage() {
         redirect: false,
       });
       if (res?.ok) {
-        return router.push("/dashboard/profile");
+        return router.push("/dashboard");
       }
     } catch (error) {
       toast.error("Error al iniciar sesion");
@@ -60,7 +69,7 @@ function LoginPage() {
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Your email
+                    Tu correo
                   </label>
                   <input
                     type="email"
@@ -71,7 +80,7 @@ function LoginPage() {
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Password
+                    Contraseña
                   </label>
                   <input
                     type="password"
@@ -87,13 +96,13 @@ function LoginPage() {
                 >
                   {loading ? <Loading /> : 'Iniciar sesion'}
                 </button>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                <p className="text-sm font-light text-gray-500 dark:text-gray-400 m-2">
                   No tienes una cuenta?
                   <Link
                     href="/register"
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >
-                    Registrate aqui
+                     Registrate aqui
                   </Link>
                 </p>
                 <Toaster richColors />

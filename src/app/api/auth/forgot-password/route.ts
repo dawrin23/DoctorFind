@@ -43,7 +43,7 @@ export async function POST(request: Request) {
   }
 
   //generar otp y guardarlo en la base de datos
-  const Otp = Math.floor(100000 + Math.random() * 900000);
+  const Otp = Math.floor(1000 + Math.random() * 9000);
 
   //guardar el otp en la base de datos
   const OtpUser = await prisma.otp.create({

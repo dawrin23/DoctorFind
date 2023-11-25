@@ -1,14 +1,13 @@
 "use client";
-import axios, {AxiosError} from "axios";
+import axios, { AxiosError } from "axios";
 import { FormEvent, useState } from "react";
-import {Toaster, toast} from "sonner"
-import {signIn} from "next-auth/react"
+import { Toaster, toast } from "sonner";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
 function RegisterPage() {
-
   const [imagePreviewUrl, setImagePreviewUrl] = useState<File>();
   const [error, setError] = useState();
   const router = useRouter();
@@ -25,57 +24,57 @@ function RegisterPage() {
     const confirmPassword = formData.get("confirmPassword");
     const foto = formData.get("foto");
 
-    if(email){
+    if (email) {
       formData.append("email", email);
     }
 
-    if(password){
+    if (password) {
       formData.append("password", password);
     }
 
-    if(name){
+    if (name) {
       formData.append("name", name);
     }
 
-    if(lastname){
+    if (lastname) {
       formData.append("lastname", lastname);
     }
-    
-    if(confirmPassword){
+
+    if (confirmPassword) {
       formData.append("confirmPassword", confirmPassword);
     }
 
-    if(foto){
+    if (foto) {
       formData.append("foto", foto);
     }
 
     try {
-      const signupResponse = await axios.post("http://localhost:3000/api/auth/signup", formData    )
-      toast.success("Usuario creado con exito")
-      console.log(signupResponse)
+      const signupResponse = await axios.post(
+        "http://localhost:3000/api/auth/signup",
+        formData
+      );
+      toast.success("Usuario creado con exito");
+      console.log(signupResponse);
 
-    const res = await signIn("credentials", {
+      const res = await signIn("credentials", {
         email: signupResponse.data.email,
-        password: password
-      })
+        password: password,
+      });
 
-      if(res?.ok){
-       return router.push("/dashboard")
+      if (res?.ok) {
+        return router.push("/dashboard");
       }
-
     } catch (error) {
-      console.log(error)
-      if(error instanceof AxiosError){
+      console.log(error);
+      if (error instanceof AxiosError) {
         setError(error.response?.data.message);
       }
     }
-    
   };
 
   const toastSet = () => {
-    toast.error(error)
-  }
-
+    toast.error(error);
+  };
 
   return (
     <div>
@@ -86,7 +85,7 @@ function RegisterPage() {
             href="#"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
           >
-           <img
+            <img
               className="w-20 h-15 mr-2 mb-2 ml-5"
               src="https://res.cloudinary.com/dbvlq1k1b/image/upload/v1696345177/logo_Doctor_Finder.png"
               alt="logo"
@@ -123,7 +122,7 @@ function RegisterPage() {
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Your email
+                    Tu correo electrónico
                   </label>
                   <input
                     type="email"
@@ -134,7 +133,7 @@ function RegisterPage() {
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Password
+                    Contraseña
                   </label>
                   <input
                     type="password"
@@ -159,21 +158,21 @@ function RegisterPage() {
                     Foto de perfil
                   </label>
                   <div>
-                  <input
-                    className="block w-full text-sm text-slate-500
+                    <input
+                      className="block w-full text-sm text-slate-500
       file:mr-4 file:py-2 file:px-4
       file:rounded-full file:border-0
       file:text-sm file:font-semibold
       file:bg-blue-50 file:text-blue-700
       hover:file:bg-blue-100"
-                    type="file"
-                    name="foto"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files.length > 0) {
-                        setImagePreviewUrl(e.target.files[0]);
-                      }
-                    }}
-                  />
+                      type="file"
+                      name="foto"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files.length > 0) {
+                          setImagePreviewUrl(e.target.files[0]);
+                        }
+                      }}
+                    />
                   </div>
                   <div>
                     {imagePreviewUrl && (
@@ -189,7 +188,6 @@ function RegisterPage() {
                   type="submit"
                   className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
-                 
                   Crear cuenta
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -201,7 +199,7 @@ function RegisterPage() {
                     Login aqui
                   </Link>
                 </p>
-                <Toaster richColors  />
+                <Toaster richColors />
               </form>
             </div>
           </div>

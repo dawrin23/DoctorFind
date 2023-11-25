@@ -1,0 +1,33 @@
+[
+    {
+      "id": 1,
+      "nombre": "Dr. Juan Pérez",
+      "especialidad": "Cardiología",
+      "foto": "/cardiologo.jpg"
+    },
+    {
+      "id": 2,
+      "nombre": "Dra. María González",
+      "especialidad": "Pediatría",
+      "foto": "/Pediatria.jpg"
+    },
+    {
+      "id": 3,
+      "nombre": "Dr. Carlos Rodríguez",
+      "especialidad": "Dermatología",
+      "foto": "/dermatologia.jpeg"
+    },
+    {
+      "id": 4,
+      "nombre": "Dra. Laura Sánchez",
+      "especialidad": "Ginecología",
+      "foto": "/ginecologia.jpg"
+    },
+    {
+      "id": 5,
+      "nombre": "Dr. Roberto López",
+      "especialidad": "Odontología",
+      "foto": "/Odontólogo-o-dentista-en-valencia.jpg"
+    }
+  ]
+  

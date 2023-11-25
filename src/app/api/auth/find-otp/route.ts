@@ -12,7 +12,14 @@ export async function POST(request: Request) {
       otp: otp.otp,
     },
     include: {
-      author: true,
+      author: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          foto: true,
+        }
+      },
     },
   });
 
