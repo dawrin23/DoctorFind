@@ -1,11 +1,12 @@
 import Calendar from "@/components/Calendar";
-import React from "react";
+import EventCalendar from "@/components/EventCalendar";
 
 function DoctorCalendar() {
   return (
     <div>
       <h1 className="title mb-5">Calendario</h1>
-      <Calendar />
+      {/* <Calendar /> */}
+      <EventCalendar />
     </div>
   );
 }
