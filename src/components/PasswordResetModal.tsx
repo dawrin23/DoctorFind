@@ -1,25 +1,45 @@
+import axios from "axios";
 import React, { useState } from "react";
 import Modal from "react-modal";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
 
 interface PasswordResetModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
+  id: number;
 }
 
 const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
   isOpen,
   onRequestClose,
+  id,
 }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       toast.error("Las contraseñas no coinciden");
     } else {
-      // Aquí puedes manejar el envío de la nueva contraseña
+      const res = await axios.put(
+        "http://localhost:3000/api/auth/reset-password/" + id,
+        {
+          password: password,
+          confirmPassword: confirmPassword,
+        }
+      );
+      if (res.status === 200) {
+        toast.success("Contraseña cambiada correctamente");
+        onRequestClose();
+        router.push("/login");
+
+      } else {
+        toast.error("Error al cambiar contraseña");
+      }
     }
   };
 

@@ -4,10 +4,9 @@ import { FormEvent, useState } from "react";
 import { Toaster, toast } from "sonner";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 
-function RegisterPage() {
+function RegisterDoctorPage() {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<File>();
   const [error, setError] = useState();
   const router = useRouter();
@@ -23,6 +22,13 @@ function RegisterPage() {
     const lastname = formData.get("lastname");
     const confirmPassword = formData.get("confirmPassword");
     const foto = formData.get("foto");
+    const medicalSpeciality = formData.get("medicalSpeciality");
+    const contactPhone = formData.get("contactPhone");
+    const workExperience = formData.get("workExperience");
+    const officeAddress = formData.get("officeAddress");
+    const workingHours = formData.get("workingHours");
+    const exequatur = formData.get("exequatur");
+
 
     if (email) {
       formData.append("email", email);
@@ -48,22 +54,37 @@ function RegisterPage() {
       formData.append("foto", foto);
     }
 
+    if (medicalSpeciality) {
+      formData.append("medicalSpeciality", medicalSpeciality);
+    }
+
+    if (contactPhone) {
+      formData.append("contactPhone", contactPhone);
+    }
+
+    if (workExperience) {
+      formData.append("workExperience", workExperience);
+    }
+
+    if (officeAddress) {
+      formData.append("officeAddress", officeAddress);
+    }
+
+    if (workingHours) {
+      formData.append("workingHours", workingHours);
+    }
+
+    if (exequatur) {
+      formData.append("exequatur", exequatur);
+    }
+
     try {
       const signupResponse = await axios.post(
-        "http://localhost:3000/api/auth/signup",
+        "http://localhost:3000/api/auth/signupdoctor",
         formData
       );
       toast.success("Usuario creado con exito");
       console.log(signupResponse);
-
-      const res = await signIn("credentials", {
-        email: signupResponse.data.email,
-        password: password,
-      });
-
-      if (res?.ok) {
-        return router.push("/dashboard");
-      }
     } catch (error) {
       console.log(error);
       if (error instanceof AxiosError) {
@@ -118,6 +139,72 @@ function RegisterPage() {
                     name="lastname"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Ingresa tu apellido"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Especialidad
+                  </label>
+                  <input
+                    type="text"
+                    name="medicalSpeciality"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Ingresa tu Especialidad"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Numero de contacto
+                  </label>
+                  <input
+                    type="text"
+                    name="contactPhone"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Ingresa tu Experiencia Medica"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Experiencia Medica
+                  </label>
+                  <input
+                    type="text"
+                    name="workExperience"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Ingresa tu Experiencia Medica"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Direccion oficial
+                  </label>
+                  <input
+                    type="text"
+                    name="officeAddress"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Ingresa tu Direccion oficial"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Horas Trabajadas
+                  </label>
+                  <input
+                    type="text"
+                    name="workingHours"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Ingresa tu Horas Trabajadas"
+                  />
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Ingrea tu Exequatur
+                  </label>
+                  <input
+                    type="text"
+                    name="exequatur"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Ingresa tu Horas Exequatur"
                   />
                 </div>
                 <div>
@@ -209,4 +296,4 @@ function RegisterPage() {
   );
 }
 
-export default RegisterPage;
+export default RegisterDoctorPage;

@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   //validar que el email sea correcto
   if (!email) {
     return NextResponse.json(
-      { message: "Email is incorrect" },
+      { message: "Correo es incorrecto" },
       { status: 400 }
     );
   }
@@ -25,7 +25,7 @@ export async function POST(request: Request) {
 
   //si el email no existe en la base de datos
   if (!userFound) {
-    return NextResponse.json({ message: "User not found" }, { status: 409 });
+    return NextResponse.json({ message: "Usuario no encontrado" }, { status: 409 });
   }
 
   const UserOtp = await prisma.otp.findUnique({

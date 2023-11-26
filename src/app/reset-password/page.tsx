@@ -3,10 +3,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { toast, Toaster } from "sonner";
 import PasswordResetModal from "@/components/PasswordResetModal";
+import { set } from "date-fns";
 
 function ResetPassword() {
   const [otp, setOtp] = useState(Array(4).fill(""));
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [userId, setUserId] = useState(0);
 
   const handleOtpChange = (
     index: number,
@@ -29,6 +31,11 @@ function ResetPassword() {
       const res = await axios.post("http://localhost:3000/api/auth/find-otp", {
         otp: otpValue,
       });
+
+      
+      console.log(res.data.author.id);
+
+      setUserId(res.data.author.id);
 
       console.log(res);
 
@@ -95,6 +102,7 @@ function ResetPassword() {
       </div>
       <PasswordResetModal
         isOpen={modalIsOpen}
+        id={userId}
         onRequestClose={() => setModalIsOpen(false)}
       />
       {/* <Toaster richColors />
