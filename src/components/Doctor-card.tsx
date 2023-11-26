@@ -1,12 +1,22 @@
-interface DoctorCardProps { 
-    id: number;
-    name: string;
-    specialty: string;
-    image: string;
+interface Doctor { 
+  id: number;
+  email: string;
+  name: string;
+  lastname: string;
+  password: string;
+  foto: string;
+  MedicalSpecialty: string;
+  ContactPhone: string;
+  WorkExperience: string;
+  OfficeAddress: string;
+  WorkingHours: string;
+  Exequatur: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 
-function DoctorCard(doctor: any) {
+function DoctorCard(doctor: Doctor) {
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ml-3 mr-3 mb-3 ">
       <div className="flex justify-end px-4 pt-4">
@@ -67,18 +77,21 @@ function DoctorCard(doctor: any) {
           alt="Bonnie image"
         />
         <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-          {doctor.nombre}
+          {doctor.name} {doctor.lastname}
         </h5>
         <span className="text-sm text-gray-500 dark:text-gray-400">
-            {doctor.especialidad}
+            {doctor.MedicalSpecialty}
         </span>
         <div className="flex mt-4 md:mt-6">
-          <a
-            href="#"
+          <button
+            type="button"
+            onClick={() => { 
+              console.log(doctor.id)
+            }}
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Agendar cita
-          </a>
+          </button>
           <a
             href="#"
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 ms-3"
