@@ -23,6 +23,7 @@ interface Doctor {
 function FindDoctor() {
   const [searchQuery, setSearchQuery] = useState("");
   const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [filteredDoctors, setFilteredDoctors] = useState<Doctor[]>([]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,6 +43,19 @@ function FindDoctor() {
     };
     fetchDoctor();
   }, []);
+
+
+  useEffect(() => {
+    const filterDoctors = (doctors: Doctor[]) => {
+      return doctors.filter((doctor) => {
+        return (
+          doctor.MedicalSpecialty.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          doctor.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      });
+    }
+    setFilteredDoctors(filterDoctors(doctors));
+  }, [searchQuery, doctors]);
 
   return (
     <div>
@@ -87,7 +101,7 @@ function FindDoctor() {
       </div>
 
       <div className="flex flex-wrap justify-center">
-        {doctors && doctors.map((doctor) => (
+        {filteredDoctors.map((doctor) => (
           <DoctorCard key={doctor.id} {...doctor} />
         ))}
       </div>

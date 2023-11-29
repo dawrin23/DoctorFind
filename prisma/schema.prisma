@@ -17,6 +17,7 @@ model User {
   lastname  String
   password  String
   foto      String?
+  solicitud solicitud[]
   Otp       Otp?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -42,6 +43,7 @@ model userDoctor {
   OfficeAddress    String
   WorkingHours     String
   Exequatur        String
+  solicitud        solicitud[]
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
   otpdoctor        Otpdoctor?
@@ -52,4 +54,15 @@ model Otpdoctor {
   otp      Int        @unique
   author   userDoctor @relation(fields: [authorId], references: [id])
   authorId Int        @unique
+}
+
+model solicitud {
+  id               Int        @id @default(autoincrement())
+  author           User       @relation(fields: [authorId], references: [id])
+  authorId         Int
+  doctor           userDoctor @relation(fields: [doctorId], references: [id])
+  doctorId         Int
+  aceptado         Boolean    @default(false)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
 }

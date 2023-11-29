@@ -64,7 +64,7 @@ import { usePathname } from "next/navigation";
                 <Link
                   href="/dashboard/profile"
                   className={` ${pathname === '/dashboard/profile' ? 
-                  ' text-black dark:text-white' : 'block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500'
+                  ' text-black dark:text-white' : 'block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-white'
                 }  `}
                   aria-current="page"
                 >
@@ -75,7 +75,7 @@ import { usePathname } from "next/navigation";
                <Link
                  href="/find-doctor"
                  className={` ${pathname === '/dashboard/profile' ? 
-                 ' text-black dark:text-white' : 'block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500'
+                 ' text-black dark:text-white' : 'block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-white'
                }  `}
                  aria-current="page"
                >
