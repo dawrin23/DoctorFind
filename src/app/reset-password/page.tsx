@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { toast, Toaster } from "sonner";
 import PasswordResetModal from "@/components/PasswordResetModal";
-import { set } from "date-fns";
+import { PinInput, PinInputField } from "@chakra-ui/react";
 
 function ResetPassword() {
   const [otp, setOtp] = useState(Array(4).fill(""));
@@ -24,31 +24,34 @@ function ResetPassword() {
 
   const sendOtp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (Array.isArray(otp) && otp.length > 0) {
-      const otpValue = otp.join("");
-      console.log(otpValue);
 
-      const res = await axios.post("http://localhost:3000/api/auth/find-otp", {
-        otp: otpValue,
-      });
+    try {
+      if (Array.isArray(otp) && otp.length > 0) {
+        const otpValue = otp.join("");
+        console.log(otpValue);
 
-      
-      console.log(res.data.author.id);
+        const res = await axios.post(
+          "http://localhost:3000/api/auth/find-otp",
+          {
+            otp: otpValue,
+          }
+        );
 
-      setUserId(res.data.author.id);
+        console.log(res.data.author.id);
 
-      console.log(res);
+        setUserId(res.data.author.id);
 
-      if (res.status === 200) {
-        toast.success("Codigo correcto");
-        //abrir modal para cambiar contraseña
-        setModalIsOpen(true);
+        console.log(res);
+
+        if (res.status === 200) {
+          toast.success("Codigo correcto");
+          //abrir modal para cambiar contraseña
+          setModalIsOpen(true);
+        }
       }
-
-       toast(res.data.message)
-
-    } else {
-      toast.error("Ingrese un codigo");
+    } catch (error) {
+      console.log(error);
+      toast.error("Codigo incorrecto");
     }
   };
 
@@ -70,9 +73,10 @@ function ResetPassword() {
             <form onSubmit={sendOtp}>
               <div className="flex flex-col space-y-16">
                 <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs ">
-                  {[0, 1, 2, 3].map((_, index) => (
-                    <div key={index} className="w-16 h-16 ">
-                      <input
+                  <PinInput>
+                    {[0, 1, 2, 3].map((_, index) => (
+                      <div key={index} className="w-16 h-16 ">
+                        {/* <input
                         className="w-full h-full dark:text-black flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
                         type="text"
                         placeholder="•"
@@ -80,9 +84,17 @@ function ResetPassword() {
                         onChange={(event) => {
                           handleOtpChange(index, event);
                         }}
-                      />
-                    </div>
-                  ))}
+                      /> */}
+
+                        <PinInputField
+                          className="w-full h-full dark:text-black flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-blue-700"
+                          onChange={(event) => {
+                            handleOtpChange(index, event);
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </PinInput>
                 </div>
 
                 <div className="flex flex-col space-y-5">

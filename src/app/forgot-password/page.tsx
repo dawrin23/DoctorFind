@@ -3,9 +3,12 @@ import axios, { AxiosError } from "axios";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { Toaster, toast } from "sonner";
+import { useRouter } from "next/navigation";
+
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
+  const router = useRouter();
 
   const handledResetPassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,7 +23,8 @@ function ForgotPassword() {
 
       if (data.status === 200) {
         toast.success("Revisa tu correo electronico");
-        
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        router.push("/reset-password");
       }
     } catch (error) {
       if (error instanceof AxiosError) {
