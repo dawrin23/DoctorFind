@@ -1,4 +1,7 @@
-interface Doctor { 
+import { useSession } from "next-auth/react";
+import { toast, Toaster } from "sonner";
+
+interface Doctor {
   id: number;
   email: string;
   name: string;
@@ -15,11 +18,36 @@ interface Doctor {
   updatedAt: string;
 }
 
-
 function DoctorCard(doctor: Doctor) {
+  const { data: session, status } = useSession();
+  const userData = session?.user;
+
+  const handleCita = async (doctorId: number) => {
+    const response = await fetch(
+      //@ts-ignore
+      `http://localhost:3000/api/solicitud/${userData?.id}/${doctorId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    if (response.status === 200) {
+      toast.success("Cita agendada con exito");
+    }
+
+    if (response.status === 500) {
+      toast.error("Ya tienes una cita con este doctor");
+    }
+  };
+
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ml-3 mr-3 mb-3 ">
       <div className="flex justify-end px-4 pt-4">
+        <Toaster richColors />
         <button
           id="dropdownButton"
           data-dropdown-toggle="dropdown"
@@ -80,13 +108,13 @@ function DoctorCard(doctor: Doctor) {
           {doctor.name} {doctor.lastname}
         </h5>
         <span className="text-sm text-gray-500 dark:text-gray-400">
-            {doctor.MedicalSpecialty}
+          {doctor.MedicalSpecialty}
         </span>
         <div className="flex mt-4 md:mt-6">
           <button
             type="button"
-            onClick={() => { 
-              console.log(doctor.id)
+            onClick={() => {
+              handleCita(doctor.id);
             }}
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >

@@ -1,8 +1,8 @@
 "use client";
 import axios, { AxiosError } from "axios";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +12,15 @@ function RegisterPage() {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<File>();
   const [error, setError] = useState();
   const router = useRouter();
+
+  const { data: session, status } = useSession();
+
+
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session]);
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -89,7 +98,9 @@ function RegisterPage() {
             href="#"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
           >
-            <img
+            <Image
+            height={200}
+            width={200}
               className="w-20 h-15 mr-2 mb-2 ml-5"
               src="https://res.cloudinary.com/dbvlq1k1b/image/upload/v1696345177/logo_Doctor_Finder.png"
               alt="logo"
@@ -198,7 +209,9 @@ function RegisterPage() {
                   </div>
                   <div>
                     {imagePreviewUrl && (
-                      <img
+                      <Image
+                      height={100}
+                      width={100}
                         src={URL.createObjectURL(imagePreviewUrl)}
                         alt=""
                         className="h-13 w-20 rounded-full"

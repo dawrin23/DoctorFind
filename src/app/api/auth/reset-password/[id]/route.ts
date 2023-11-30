@@ -101,6 +101,12 @@ export async function PUT(request: Request, { params }: Params) {
       );
     }
 
+    await prisma.otp.delete({
+      where: {
+        authorId: Number(params.id),
+      },
+    })
+
     return NextResponse.json(
       {
         message: "Password correctly updated",
