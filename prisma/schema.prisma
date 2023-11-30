@@ -63,6 +63,8 @@ model solicitud {
   doctor           userDoctor @relation(fields: [doctorId], references: [id])
   doctorId         Int
   aceptado         Boolean    @default(false)
+  fecha            DateTime
+  mensaje          String
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt
 }

@@ -1,8 +1,12 @@
 {
     "cSpell.words": [
+        "actualizada",
         "cloudinary",
+        "Contraseña",
+        "encontrado",
         "foto",
-        "tailwindcss"
+        "tailwindcss",
+        "Usuario"
     ],
     "typescript.tsdk": "node_modules\\typescript\\lib"
 }

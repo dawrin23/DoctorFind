@@ -14,6 +14,11 @@ export async function POST(request: Request, { params }: Params) {
 
   console.log(userId, doctorId);
 
+  const {fecha, mensaje} = await request.json();
+
+  const fechaISO = new Date(fecha).toISOString();
+
+
   //vreificar si el usuario ya tiene una solicitud con ese doctor
   const verificar = await prisma?.solicitud.findFirst({
     where: {
@@ -45,6 +50,8 @@ export async function POST(request: Request, { params }: Params) {
           id: Number(doctorId),
         },
       },
+      fecha: fechaISO,
+      mensaje: mensaje,
     },
     }
   );
