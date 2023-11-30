@@ -149,7 +149,7 @@ function RegisterPage() {
                     />
 
                     <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={handleClick}>
+                      <Button h="1.75rem" size="sm" onClick={handleClick} className="bg-blue-600 hover:bg-blue-900 rounded-md p-1 text-white mt-2">
                         {show ? "Ocultar" : "Mostrar"}
                       </Button>
                     </InputRightElement>
@@ -169,7 +169,7 @@ function RegisterPage() {
                     />
 
                     <InputRightElement width="4.5rem">
-                      <Button h="1.75rem" size="sm" onClick={handleClick}>
+                      <Button h="1.75rem" size="sm" onClick={handleClick} className="bg-blue-600 hover:bg-blue-900 rounded-md p-1 text-white mt-2">
                         {show ? "Ocultar" : "Mostrar"}
                       </Button>
                     </InputRightElement>

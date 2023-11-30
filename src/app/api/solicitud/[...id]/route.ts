@@ -2,13 +2,14 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 
 interface Params {
-  params: [string, string];
+  params: {
+    id: string[];
+  };
 }
 
 export async function POST(request: Request, { params }: Params) {
-  //@ts-ignore
+
   const userId = params.id[0];
-  //@ts-ignore
   const doctorId = params.id[1];
 
   console.log(userId, doctorId);
@@ -75,6 +76,23 @@ export async function GET(request: Request, { params }: Params) {
       }
     );
   }
+
+  return NextResponse.json(solicitud);
+}
+
+export async function PUT(request: Request, { params }: Params) {
+
+
+  const solicitudId = params.id[1];
+
+  const solicitud = await prisma?.solicitud.update({
+    where: {
+      id: Number(solicitudId),
+    },
+    data: {
+      aceptado: true,
+    },
+  });
 
   return NextResponse.json(solicitud);
 }
