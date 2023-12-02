@@ -117,18 +117,6 @@ function ResetPassword() {
         id={userId}
         onRequestClose={() => setModalIsOpen(false)}
       />
-      {/* <Toaster richColors />
-      <h1>Restablecer contraseña</h1>
-      <form onClick={sendOtp}>
-        <input
-          type="text"
-          placeholder="Ingrese el codigo enviado a su correo"
-          onChange={(event) => {
-            setOtp(event.target.value);
-          }}
-        />
-        <button type="submit">Enviar</button>
-      </form> */}
     </div>
   );
 }

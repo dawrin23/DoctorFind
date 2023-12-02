@@ -1,6 +1,5 @@
 "use client";
 import DoctorCard from "@/components/Doctor-card";
-import doctorData from "@/data/doctor.json";
 import { useState, useEffect } from "react";
 
 interface Doctor { 

@@ -4,8 +4,7 @@ import Modal from "react-modal";
 import { Toaster, toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Transition, Dialog } from "@headlessui/react";
-import { on } from "events";
-
+import { Button, InputGroup, InputRightElement, Input } from "@chakra-ui/react";
 
 interface PasswordResetModalProps {
   isOpen: boolean;
@@ -21,6 +20,8 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
 
   const handleSubmit = async () => {
     // e.preventDefault();
@@ -38,7 +39,6 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
         toast.success("Contraseña cambiada correctamente");
         onRequestClose();
         router.push("/login");
-
       } else {
         toast.error(res.data.message);
       }
@@ -47,8 +47,8 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
 
   return (
     <>
-    <Toaster richColors />
-    <Transition appear show={isOpen} as={Fragment}>
+      <Toaster richColors />
+      <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={onRequestClose}>
           <Transition.Child
             as={Fragment}
@@ -82,12 +82,42 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
                   </Dialog.Title>
                   <div className="mt-2">
                     <h4>Nueva contraseña</h4>
-                    <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setPassword(e.target.value)} />
+                    <InputGroup>
+                    <Input
+                      pr="4.5rem"
+                      type={show ? "text" : "password"}
+                      placeholder="••••••••"
+                      name="password"
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+
+                    <InputRightElement width="4.5rem">
+                      <Button h="1.75rem" size="sm" onClick={handleClick} className="bg-blue-600 hover:bg-blue-900 rounded-md p-1 text-white mt-2">
+                        {show ? "Ocultar" : "Mostrar"}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                   </div>
-                  
+
                   <div className="mt-2">
                     <h4>Confirmar contraseña</h4>
-                    <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setConfirmPassword(e.target.value)} />
+                    <InputGroup>
+                    <Input
+                      pr="4.5rem"
+                      type={show ? "text" : "password"}
+                      placeholder="••••••••"
+                      name="password"
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+
+                    <InputRightElement width="4.5rem">
+                      <Button h="1.75rem" size="sm" onClick={handleClick} className="bg-blue-600 hover:bg-blue-900 rounded-md p-1 text-white mt-2">
+                        {show ? "Ocultar" : "Mostrar"}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                   </div>
 
                   <div className="mt-4">
@@ -112,7 +142,7 @@ const PasswordResetModal: React.FC<PasswordResetModalProps> = ({
           </div>
         </Dialog>
       </Transition>
-      </>
+    </>
 
     // <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
     //   <section className="bg-gray-50 dark:bg-gray-900">
