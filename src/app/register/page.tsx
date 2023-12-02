@@ -1,16 +1,28 @@
 "use client";
-import axios, {AxiosError} from "axios";
-import { FormEvent, useState } from "react";
-import {Toaster, toast} from "sonner"
-import {signIn} from "next-auth/react"
+import axios, { AxiosError } from "axios";
+import { FormEvent, useEffect, useState } from "react";
+import { Toaster, toast } from "sonner";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { InputRightElement, Input, Button, InputGroup } from "@chakra-ui/react";
 
 function RegisterPage() {
-
   const [imagePreviewUrl, setImagePreviewUrl] = useState<File>();
   const [error, setError] = useState();
   const router = useRouter();
+
+  const { data: session, status } = useSession();
+
+
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session]);
+
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,57 +36,57 @@ function RegisterPage() {
     const confirmPassword = formData.get("confirmPassword");
     const foto = formData.get("foto");
 
-    if(email){
+    if (email) {
       formData.append("email", email);
     }
 
-    if(password){
+    if (password) {
       formData.append("password", password);
     }
 
-    if(name){
+    if (name) {
       formData.append("name", name);
     }
 
-    if(lastname){
+    if (lastname) {
       formData.append("lastname", lastname);
     }
-    
-    if(confirmPassword){
+
+    if (confirmPassword) {
       formData.append("confirmPassword", confirmPassword);
     }
 
-    if(foto){
+    if (foto) {
       formData.append("foto", foto);
     }
 
     try {
-      const signupResponse = await axios.post("http://localhost:3000/api/auth/signup", formData    )
-      toast.success("Usuario creado con exito")
-      console.log(signupResponse)
+      const signupResponse = await axios.post(
+        "http://localhost:3000/api/auth/signup",
+        formData
+      );
+      toast.success("Usuario creado con exito");
+      console.log(signupResponse);
 
-    const res = await signIn("credentials", {
+      const res = await signIn("credentials", {
         email: signupResponse.data.email,
-        password: password
-      })
+        password: password,
+      });
 
-      if(res?.ok){
-       return router.push("/dashboard")
+      if (res?.ok) {
+        return router.push("/dashboard");
       }
-
     } catch (error) {
-      console.log(error)
-      if(error instanceof AxiosError){
+      console.log(error);
+      if (error instanceof AxiosError) {
         setError(error.response?.data.message);
       }
     }
-    
   };
 
   const toastSet = () => {
-    toast.error(error)
-  }
-
+    toast.error(error);
+  };
 
   return (
     <div>
@@ -105,7 +117,7 @@ function RegisterPage() {
                   <input
                     type="text"
                     name="name"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Ingresa tu nombre"
                   />
                 </div>
@@ -116,67 +128,87 @@ function RegisterPage() {
                   <input
                     type="text"
                     name="lastname"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Ingresa tu apellido"
                   />
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Your email
+                    Tu correo electrónico
                   </label>
                   <input
                     type="email"
                     name="email"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="name@company.com"
                   />
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Password
+                    Contraseña
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                  <InputGroup>
+                    <Input
+                      pr="4.5rem"
+                      type={show ? "text" : "password"}
+                      placeholder="••••••••"
+                      name="password"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+
+                    <InputRightElement width="4.5rem">
+                      <Button h="1.75rem" size="sm" onClick={handleClick} className="bg-blue-600 hover:bg-blue-900 rounded-md p-1 text-white mt-2">
+                        {show ? "Ocultar" : "Mostrar"}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Confirmar Contraseña
                   </label>
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  />
+                  <InputGroup>
+                    <Input
+                      pr="4.5rem"
+                      type={show ? "text" : "password"}
+                      placeholder="••••••••"
+                      name="confirmPassword"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    />
+
+                    <InputRightElement width="4.5rem">
+                      <Button h="1.75rem" size="sm" onClick={handleClick} className="bg-blue-600 hover:bg-blue-900 rounded-md p-1 text-white mt-2">
+                        {show ? "Ocultar" : "Mostrar"}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                 </div>
                 <div className="flex items-center space-x-6">
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Foto de perfil
                   </label>
                   <div>
-                  <input
-                    className="block w-full text-sm text-slate-500
+                    <input
+                      className="block w-full text-sm text-slate-500
       file:mr-4 file:py-2 file:px-4
       file:rounded-full file:border-0
       file:text-sm file:font-semibold
       file:bg-blue-50 file:text-blue-700
       hover:file:bg-blue-100"
-                    type="file"
-                    name="foto"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files.length > 0) {
-                        setImagePreviewUrl(e.target.files[0]);
-                      }
-                    }}
-                  />
+                      type="file"
+                      name="foto"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files.length > 0) {
+                          setImagePreviewUrl(e.target.files[0]);
+                        }
+                      }}
+                    />
                   </div>
                   <div>
                     {imagePreviewUrl && (
-                      <img
+                      <Image
+                      height={100}
+                      width={100}
                         src={URL.createObjectURL(imagePreviewUrl)}
                         alt=""
                         className="h-13 w-20 rounded-full"

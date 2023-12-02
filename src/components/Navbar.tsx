@@ -3,13 +3,13 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import {useState} from 'react'
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
  function Navbar() {
   const { data: session, status } = useSession();
-  //@ts-ignore
-  const userData = session?.user?.foto;
-  console.log(userData);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const pathname = usePathname();
 
   function handleMenuToggle() {
     setIsMenuOpen(!isMenuOpen);
@@ -18,7 +18,7 @@ import { useSession } from "next-auth/react";
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="flex flex-wrap items-center justify-between mx-0 p-4">
-        <Link href="/" className="flex items-center justify-center">
+        <Link href={session ? '/dashboard' : '/'} className="flex items-center justify-center">
           <img
             src="https://res.cloudinary.com/dbvlq1k1b/image/upload/v1696345177/logo_Doctor_Finder.png"
             className="h-12 mr-3 ml-3 mb-3"
@@ -36,7 +36,7 @@ import { useSession } from "next-auth/react";
           aria-expanded={isMenuOpen}
           onClick={handleMenuToggle}
         >
-          <span className="sr-only">Open main menu</span>
+          <span className="sr-only">Abrir menu princiapal</span>
           <svg
             className="w-5 h-5"
             aria-hidden="true"
@@ -46,9 +46,9 @@ import { useSession } from "next-auth/react";
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M1 1h15M1 7h15M1 13h15"
             />
           </svg>
@@ -60,15 +60,30 @@ import { useSession } from "next-auth/react";
         >
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {session ? (
+              <>
               <li>
                 <Link
                   href="/dashboard/profile"
-                  className="block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                  className={` ${pathname === '/dashboard/profile' ? 
+                  ' text-black dark:text-white' : 'block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-white'
+                }  `}
                   aria-current="page"
                 >
                   Perfil
                 </Link>
               </li>
+               <li>
+               <Link
+                 href="/find-doctor"
+                 className={` ${pathname === '/dashboard/profile' ? 
+                 ' text-black dark:text-white' : 'block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-white'
+               }  `}
+                 aria-current="page"
+               >
+                 Buscar doctor
+               </Link>
+             </li>
+             </>
             ) : (
               <>
                 <li>

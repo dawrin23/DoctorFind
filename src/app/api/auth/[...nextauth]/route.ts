@@ -23,7 +23,23 @@ const handler = NextAuth({
           },
         });
         if (!userFound) {
-          throw new Error("Invalid crendentials");
+          const userFoundDoctor = await prisma.userDoctor.findUnique({
+            where: {
+              email: credentials?.email,
+            },
+          });
+          if (!userFoundDoctor) {
+            throw new Error("Invalid crendentials");
+          } else {
+            const passwordMatchDoctor = await bcrypt.compare(
+              credentials!.password,
+              userFoundDoctor.password
+            );
+            if (!passwordMatchDoctor) {
+              throw new Error("Invalid crendentials");
+            }
+            return userFoundDoctor;
+          }
         }
 
         const passwordMatch = await bcrypt.compare(
@@ -50,8 +66,8 @@ const handler = NextAuth({
     },
   },
   pages: {
-    signIn: '/login'
-  }
+    signIn: "/login",
+  },
 });
 
 export { handler as GET, handler as POST };

@@ -17,15 +17,54 @@ model User {
   lastname  String
   password  String
   foto      String?
+  solicitud solicitud[]
   Otp       Otp?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Otp {
-  id        Int      @id @default(autoincrement())
-  otp       Int   @unique
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int @unique
+  id       Int  @id @default(autoincrement())
+  otp      Int  @unique
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int  @unique
+}
 
+model userDoctor {
+  id               Int        @id @default(autoincrement())
+  email            String     @unique(map: "UserDoctor_email_key")
+  name             String
+  lastname         String
+  password         String
+  foto             String?
+  MedicalSpecialty String
+  ContactPhone     String
+  WorkExperience   String
+  OfficeAddress    String
+  WorkingHours     String
+  Exequatur        String
+  solicitud        solicitud[]
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  otpdoctor        Otpdoctor?
+}
+
+model Otpdoctor {
+  id       Int        @id @default(autoincrement())
+  otp      Int        @unique
+  author   userDoctor @relation(fields: [authorId], references: [id])
+  authorId Int        @unique
+}
+
+model solicitud {
+  id               Int        @id @default(autoincrement())
+  author           User       @relation(fields: [authorId], references: [id])
+  authorId         Int
+  doctor           userDoctor @relation(fields: [doctorId], references: [id])
+  doctorId         Int
+  aceptado         Boolean    @default(false)
+  fecha            DateTime
+  mensaje          String
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
 }
