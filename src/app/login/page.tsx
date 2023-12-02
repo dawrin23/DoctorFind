@@ -35,8 +35,7 @@ function LoginPage() {
       console.log(res);
       // if (res?.ok) {
       //   return router.push("/dashboard");
-      // }
-
+      // })
       if (res?.error) {
         toast.error("Error al iniciar sesion verifique sus credenciales");
       }
