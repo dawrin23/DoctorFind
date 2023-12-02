@@ -12,9 +12,10 @@ function ProfilePage() {
     {
       //@ts-ignore
         userData?.foto && (
-            <img
+            <Image
             className="w-24 h-24 mb-3 rounded-full shadow-lg"
                 src={userData?.foto}
+                alt="Profile image"
             />
         )
     }

@@ -5,7 +5,7 @@ function PlaceItemCard({ place }: any) {
     "https://maps.googleapis.com/maps/api/place/photo?maxwidth=800";
   return (
     <div
-      className="w-full z-10 border-[1px] 
+      className="w-64 h-full border-[1px] 
     rounded-xl shadow-md hover:scale-105 transition-all cursor-pointer"
     >
       {place?.photos ? (
@@ -20,7 +20,7 @@ function PlaceItemCard({ place }: any) {
           alt="placeholder"
           width={200}
           height={80}
-          className="w-full h-[150px] object-cover rounded-t-xl"
+          className="w-full h-[140px] object-cover rounded-t-xl"
         />
       ) : (
         <Image
@@ -31,7 +31,7 @@ function PlaceItemCard({ place }: any) {
           className="w-full h-[150px] object-cover rounded-t-xl"
         />
       )}
-      <div className="p-2">
+      <div className="p-2 justify-between flex flex-wrap">
         <h2 className="line-clamp-2">{place.name}</h2>
         <div className="flex gap-2 mt-3">
           <svg

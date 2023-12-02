@@ -34,20 +34,23 @@ function LoginPage() {
   };
 
   return (
-    <div>
+    <div className="w-100">
       {error ? <>{toastSet()}</> : null}
-      <section className="bg-gray-50 dark:bg-gray-900 container">
+      <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <a
             href="#"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
           >
+            <div className="w-15 h-12 mb-3">
+
             <img
-              className="w-20 h-15 mr-2 mb-2 ml-5"
+              className="mr-2 w-full h-full object-cover"
               src="https://res.cloudinary.com/dbvlq1k1b/image/upload/v1696345177/logo_Doctor_Finder.png"
               alt="logo"
-            />
-            DoctorFinder
+              ></img>
+              </div>
+            DoctorFinders
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -80,19 +83,22 @@ function LoginPage() {
 
                 <button
                   type="submit"
-                  className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  className="w-full dark:text-white bg-primary-600 hover:text-lg hover:shadow-lg hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
                   Iniciar seccion
                 </button>
+               <div className="flex justify-between">
+
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  No tienes una cuenta?
+                ¿No tienes una cuenta?
+                  </p>
                   <Link
                     href="/register"
                     className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                  >
+                    >
                     Registrate aqui
                   </Link>
-                </p>
+                    </div>
                 <Toaster richColors />
               </form>
             </div>

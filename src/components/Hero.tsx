@@ -7,7 +7,6 @@ function Hero({userInput}:any) {
   const [searchInput, setSearchInput] = useState<string>();
   return (
     <div className=" text-center">
-      <div>
         <Image
           src="/bg.png"
           alt="hero-image"
@@ -20,11 +19,11 @@ function Hero({userInput}:any) {
             Doctor Finder
           </h2>
           <h2 className="text-[25px]">Your Doctor Finder</h2>
-          <div className="mt-5 z-10 flex gap-2 items-center justify-center">
+          <div className="mt-5 z-10 flex gap-2 items-center h-20 justify-center">
             <input
             type="text"
             onChange={(e) => setSearchInput(e.target.value)}
-              className=" text-black border-2 bg-white z-10 border-blue-600 rounded-full px-5 py-2 mt-5 w-[36%] shadow-sm outline-blue-600"
+              className=" text-black border-2 bg-white z-10 border-blue-600 rounded-full px-5 py-2 w-[36%] shadow-sm outline-blue-600"
               placeholder="Search Doctor"
             />
             <button
@@ -47,21 +46,20 @@ function Hero({userInput}:any) {
             </button>
           </div>
         </div>
-        <div className="mt-5 flex flex-col justify-center items-center">
+        <div className="mt-5 flex flex-col max-sm:hidden justify-center h-20 mb-3 items-center">
           <h2>Or Browse the Category</h2>
-          <div className="grid grid-cols-3 md:grid-cols-7 w-[50%] justify-center gap-5 mt-3 ">
+          <div className="grid grid-cols-7 max-sm:hidden md:grid-cols-7 w-[60%] justify-center gap-5 mt-3 ">
             {category.map((item, index) => (
               <div
               onClick={() => userInput(item.name)}
                 className="border-[1px] w-[60px] p-4 bg-white rounded-full z-10 hover:border-blue-600 hover:scale-110 cursor-pointer transition-all"
                 key={index}
               >
-                <Image src={item.icon} alt={item.name} width={30} height={30} />
+                <Image src={item.icon} alt={item.name} width={30} height={40} />
               </div>
             ))}
           </div>
         </div>
-      </div>
     </div>
   );
 }
