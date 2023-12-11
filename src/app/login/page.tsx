@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Toaster, toast } from "sonner";
 import Link from "next/link";
 import Loading from "./loading";
+import axios from "axios";
 
 function LoginPage() {
   const [error, setError] = useState("");
@@ -13,10 +14,15 @@ function LoginPage() {
 
   const { data: session, status } = useSession();
   const loading1 = status === "loading";
+  const [id, setId] = useState("");
+
+  useEffect(() => {
+    setId(session?.user?.id)
+  }, [session]);
 
   useEffect(() => {
     if (!loading && session) {
-      router.push("/dashboard");
+      router.push("/dashboard/profile");
     }
   }, [loading1, session]);
 
@@ -33,13 +39,23 @@ function LoginPage() {
         redirect: false,
       });
       console.log(res);
-      // if (res?.ok) {
-      //   return router.push("/dashboard");
-      // })
+      if (res?.ok) {
+        const response = await fetch('http://localhost:3000/api/auth/find-user/'+id.toString(), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+        })
+        const data = await response.json();
+        
+        if (data?.user?.MedicalSpecialty) {
+          return router.push("/doctor-solicitud");
+        }
+        return router.push("/dashboard");
+      }
       if (res?.error) {
         toast.error("Error al iniciar sesion verifique sus credenciales");
       }
-    } catch (error) {
+    } 
+    catch (error) {
       toast.error("Error al iniciar sesion");
     } finally {
       setLoading(false);

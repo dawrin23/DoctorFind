@@ -1,17 +1,22 @@
 import { prisma } from "@/libs/prisma";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
-  const UserId = await request.json();
-  console.log(UserId.id);
-  //convertir otp a number
-  UserId.id = Number(UserId.id);
-  console.log(UserId.id);
+
+interface Params {
+    params: { id: string };
+  }
+  
+
+export async function POST(request: Request, { params }: Params) {
+  const UserId = params.id;
+  console.log(UserId);
+  const UserIdNumber = Number(UserId);
+    console.log(UserIdNumber);
 
   //buscar otp en la base de datos
   const userDB = await prisma.user.findUnique({
     where: {
-      id: UserId.id,
+      id: UserIdNumber,
     },
     select: {
       id: true,
@@ -24,7 +29,7 @@ export async function POST(request: Request) {
   if (!userDB) {
     const UserDoctorDB = await prisma.userDoctor.findUnique({
       where: {
-        id: UserId.id,
+        id: UserIdNumber,
       },
       select: {
         id: true,
