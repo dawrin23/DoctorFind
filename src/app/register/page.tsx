@@ -4,7 +4,6 @@ import { FormEvent, useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { InputRightElement, Input, Button, InputGroup } from "@chakra-ui/react";
 
@@ -92,19 +91,17 @@ function RegisterPage() {
   return (
     <div>
       {error && toastSet()}
-      <section className="bg-gray-50 dark:bg-gray-900 container">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-3/4 lg:py-0">
+      <section className="bg-gray-50 dark:bg-gray-900 h-screen">
+        <div className="flex flex-col items-center justify-center px-6 mx-auto md:h-3/4 lg:py-0">
           <a
             href="#"
             className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
           >
-            <Image
-            height={200}
-            width={200}
+          <img
               className="w-20 h-15 mr-2 mb-2 ml-5"
               src="https://res.cloudinary.com/dbvlq1k1b/image/upload/v1696345177/logo_Doctor_Finder.png"
               alt="logo"
-            />
+          />
             DoctorFinder
           </a>
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -221,20 +218,22 @@ function RegisterPage() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="w-full dark:text-white bg-primary-600 hover:text-lg hover:shadow-lg hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
                   Crear cuenta
                 </button>
-                <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Ya tienes una cuenta?
+                <div className="flex justify-between">
+                  <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                  ¿Ya tienes una cuenta?
+                  </p>
                   <Link
                     href="/login"
-                    className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                  >
+                    className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    >
                     Login aqui
                   </Link>
-                </p>
-                <Toaster richColors />
+                </div>
+                <Toaster richColors  />
               </form>
             </div>
           </div>
