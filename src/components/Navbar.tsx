@@ -1,13 +1,29 @@
-'use client'
+"use client";
 import Link from "next/link";
-import { getServerSession } from "next-auth";
-import {useState} from 'react'
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
- function Navbar() {
+function Navbar() {
   const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [id, setId] = useState("");
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    setId(session?.user?.id);
+  }, [session]);
+
+  useEffect(() => {
+    if (id) {
+      fetch("http://localhost:3000/api/auth/find-user/" + id.toString(), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => res.json())
+        .then((res) => setUser(res.user));
+    }
+  }, [id]);
 
   const pathname = usePathname();
 
@@ -61,29 +77,64 @@ import { usePathname } from "next/navigation";
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {session ? (
               <>
-              <li>
-                <Link
-                  href="/dashboard/profile"
-                  className={` ${pathname === '/dashboard/profile' ? 
-                  ' text-black dark:text-white' : 'block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-white'
-                }  `}
-                  aria-current="page"
-                >
-                  Perfil
-                </Link>
-              </li>
-               <li>
-               <Link
-                 href="/find-doctor"
-                 className={` ${pathname === '/dashboard/profile' ? 
-                 ' text-black dark:text-white' : 'block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-white'
-               }  `}
-                 aria-current="page"
-               >
-                 Buscar doctor
-               </Link>
-             </li>
-             </>
+                <li>
+                  <Link
+                    href="/dashboard/profile"
+                    className={` ${
+                      pathname === "/dashboard/profile"
+                        ? " text-black dark:text-white"
+                        : "block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-white"
+                    }  `}
+                    aria-current="page"
+                  >
+                    Perfil
+                  </Link>
+                </li>
+                {user?.MedicalSpecialty ? (
+                  <li>
+                    <Link
+                      href="/doctor-solicitud"
+                      className={` ${
+                        pathname === "doctor-solicitud"
+                          ? " text-black dark:text-white"
+                          : "block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-white"
+                      }  `}
+                      aria-current="page"
+                    >
+                      Solicitudes
+                    </Link>
+                  </li>
+                ) : (
+                  <>
+                    <li>
+                      <Link
+                        href="/find-doctor"
+                        className={` ${
+                          pathname === "/dashboard/profile"
+                            ? " text-black dark:text-white"
+                            : "block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-white"
+                        }  `}
+                        aria-current="page"
+                      >
+                        Buscar doctor
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/usuario-solicitud"
+                        className={` ${
+                          pathname === "/dashboard/profile"
+                            ? " text-black dark:text-white"
+                            : "block py-2 pl-3 pr-4 text-black hover:text-blue-500  rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-white"
+                        }  `}
+                        aria-current="page"
+                      >
+                        Solicitudes
+                      </Link>
+                    </li>
+                  </>
+                )}
+              </>
             ) : (
               <>
                 <li>

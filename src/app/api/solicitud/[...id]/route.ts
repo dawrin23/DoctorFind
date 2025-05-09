@@ -61,12 +61,12 @@ export async function POST(request: Request, { params }: Params) {
 
 export async function GET(request: Request, { params }: Params) {
 
-  //@ts-ignore
-  const doctorId = params.id[1];
+  const doctorId = params.id[0];
 
   const solicitud = await prisma?.solicitud.findMany({
     where: {
       doctorId: Number(doctorId),
+      aceptado: false,
     },
     include: { 
       author: true,
@@ -90,7 +90,7 @@ export async function GET(request: Request, { params }: Params) {
 export async function PUT(request: Request, { params }: Params) {
 
 
-  const solicitudId = params.id[1];
+  const solicitudId = params.id[0];
 
   const solicitud = await prisma?.solicitud.update({
     where: {
@@ -102,4 +102,17 @@ export async function PUT(request: Request, { params }: Params) {
   });
 
   return NextResponse.json(solicitud);
+}
+
+export async function DELETE(request: Request, { params }: Params) { 
+  
+    const solicitudId = params.id[0];
+  
+    const solicitud = await prisma?.solicitud.delete({
+      where: {
+        id: Number(solicitudId),
+      },
+    });
+  
+    return NextResponse.json(solicitud);
 }

@@ -22,6 +22,7 @@ const handler = NextAuth({
             email: credentials?.email,
           },
         });
+        
         if (!userFound) {
           const userFoundDoctor = await prisma.userDoctor.findUnique({
             where: {
