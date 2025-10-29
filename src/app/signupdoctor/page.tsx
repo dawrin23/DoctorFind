@@ -8,7 +8,7 @@ import Link from "next/link";
 
 function RegisterDoctorPage() {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<File>();
-  const [error, setError] = useState();
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -254,9 +254,23 @@ function RegisterDoctorPage() {
       hover:file:bg-blue-100"
                       type="file"
                       name="foto"
+                      accept="image/jpeg,image/png,image/gif,image/webp"
                       onChange={(e) => {
                         if (e.target.files && e.target.files.length > 0) {
-                          setImagePreviewUrl(e.target.files[0]);
+                          const file = e.target.files[0];
+                          const allowedTypes = [
+                            "image/jpeg",
+                            "image/png",
+                            "image/gif",
+                            "image/webp"
+                          ];
+                          if (allowedTypes.includes(file.type)) {
+                            setImagePreviewUrl(file);
+                            setError(null);
+                          } else {
+                            setImagePreviewUrl(undefined);
+                            setError("Solo se permiten imágenes JPEG, PNG, GIF o WEBP.");
+                          }
                         }
                       }}
                     />
@@ -265,8 +279,11 @@ function RegisterDoctorPage() {
                     {imagePreviewUrl && (
                       <img
                         src={URL.createObjectURL(imagePreviewUrl)}
-                        alt=""
+                        alt="Vista previa"
                         className="h-13 w-20 rounded-full"
+                    {error && (
+                      <p className="text-red-500 text-sm mt-2">{error}</p>
+                    )}
                       />
                     )}
                   </div>
